@@ -35,6 +35,7 @@ class Task extends Component {
           <input
             className="edit"
             type="text"
+            autoFocus
             defaultValue={this.state.label}
             onChange={(e) => this.setState({ label: e.target.value })}
           />

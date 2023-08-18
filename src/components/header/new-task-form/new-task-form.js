@@ -21,13 +21,15 @@ class NewTaskForm extends Component {
         className="new-task-form"
         type="text"
         defaultValue=""
+        autoFocus
         placeholder={this.props.placeholder}
-        onChange={(event) => {
-          this.updateValue(event);
+        onChange={(e) => {
+          this.updateValue(e);
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             onTaskAdded(this.state.inputValue);
+            e.target.value = '';
           }
         }}
       />

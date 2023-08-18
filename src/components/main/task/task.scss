@@ -90,6 +90,9 @@
   margin: auto 0 11px;
   transition: color 0.2s ease-out;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit {
