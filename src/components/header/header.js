@@ -9,7 +9,6 @@ function Header(props) {
     <header className="header">
       <h1 className="todo-title">Todos</h1>
       <label>
-        Todo
         <NewTaskForm placeholder="What needs to be done?" onTaskAdded={props.onTaskAdded} />
       </label>
     </header>

@@ -19,7 +19,8 @@
     "prepare": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix --color",
-    "format": "prettier --write"
+    "format": "prettier --write",
+    "vercel": "vercel --prod"
   },
   "eslintConfig": {
     "extends": [
