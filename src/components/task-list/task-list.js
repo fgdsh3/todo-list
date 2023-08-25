@@ -19,7 +19,7 @@ function TaskList(props) {
 
   return (
     <main className='main'>
-      <ul className="task-list">{createFullTasks()}</ul>;
+      <ul className="task-list">{createFullTasks()}</ul>
     </main>
     )
 }
