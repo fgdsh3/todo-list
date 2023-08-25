@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './todo-app.scss';
 import Header from '../header';
-import TaskList from '../main/task-list';
+import TaskList from '../task-list';
 import Footer from '../footer';
 
 const all = 'all';
@@ -88,7 +88,7 @@ class TodoApp extends Component {
     return (
       <div className="todo-app">
         <Header onTaskAdded={this.addTask} />
-        <TaskList onDeleted={this.deleteTask} tasks={filteredTasks} onChangeCompleted={this.onChangeCompleted} />
+          <TaskList onDeleted={this.deleteTask} tasks={filteredTasks} onChangeCompleted={this.onChangeCompleted} />
         <Footer
           filter={this.state.filter}
           tasks={this.state.taskList}

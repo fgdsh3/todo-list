@@ -17,13 +17,17 @@ function TaskList(props) {
       />
     ));
 
-  return <ul className="task-list">{createFullTasks()}</ul>;
+  return (
+    <main className='main'>
+      <ul className="task-list">{createFullTasks()}</ul>;
+    </main>
+    )
 }
 
 TaskList.defaultProps = {
   label: '',
-  onDeleted: () => {},
-  onChangeCompleted: () => {},
+  onDeleted: () => { },
+  onChangeCompleted: () => { },
   isChecked: false,
 };
 
