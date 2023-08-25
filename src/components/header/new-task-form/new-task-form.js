@@ -30,6 +30,7 @@ class NewTaskForm extends Component {
           if (e.key === 'Enter') {
             onTaskAdded(this.state.inputValue);
             e.target.value = '';
+            this.setState({ inputValue: '' })
           }
         }}
       />

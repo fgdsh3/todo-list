@@ -22,6 +22,7 @@ class Task extends Component {
 
   render() {
     const { id, onDeleted, onChangeCompleted, isChecked } = this.props;
+    const labelClass = this.state.isChecked ? 'completed' : '';
 
     if (this.state.editing) {
       return (
@@ -55,12 +56,12 @@ class Task extends Component {
             onChangeCompleted(id);
           }}
         />
-        <label htmlFor={id}>
+        <label className={labelClass} htmlFor={id}>
           <span className="description">{this.state.label}</span>
           <TaskCreateTime />
         </label>
         <TaskChanger onChangeTask={this.changeTask} />
-        <ClearTask onDeleted={onDeleted} id={id} />
+        <ClearTask onDeleted={onDeleted} taskId={id} />
       </li>
     );
   }

@@ -15,6 +15,11 @@
   padding: 15px 85px 15px 60px;
 }
 
+.task__item label.completed span.description {
+  color: #cdcdcd;
+  text-decoration: line-through;
+}
+
 .task__item label .description {
   word-break: break-all;
   display: block;

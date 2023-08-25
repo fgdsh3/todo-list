@@ -5,15 +5,20 @@ import Header from '../header';
 import TaskList from '../main/task-list';
 import Footer from '../footer';
 
+const all = 'all';
+const completed = 'completed';
+const active = 'active';
+
 class TodoApp extends Component {
   state = {
     taskList: [],
-    filter: 'all',
+    filter: all,
   };
 
   maxId = 1;
 
   addTask = (text) => {
+    text = text.trim();
     if (text.length === 0) {
       return this.state.taskList;
     }
@@ -62,11 +67,11 @@ class TodoApp extends Component {
 
   onFilter = (filter) => {
     switch (filter) {
-      case 'all':
+      case all:
         return this.state.taskList;
-      case 'active':
+      case active:
         return this.state.taskList.filter((item) => !item.isCompleted);
-      case 'completed':
+      case completed:
         return this.state.taskList.filter((item) => item.isCompleted);
       default:
         return this.state.taskList;
