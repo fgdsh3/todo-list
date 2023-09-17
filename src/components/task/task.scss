@@ -1,6 +1,5 @@
 .task__item {
   font-size: 24px;
-  height: 60px;
   position: relative;
   border-bottom: 1px solid #ededed;
   font-size: 24px;
@@ -10,9 +9,7 @@
 .task__item label {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-right: auto;
-  padding: 15px 85px 15px 60px;
+  justify-content: start;
 }
 
 .task__item label.completed span.description {
@@ -20,13 +17,15 @@
   text-decoration: line-through;
 }
 
-.task__item label .description {
+.description {
   word-break: break-all;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
   font-weight: 400;
   color: #4d4d4d;
+  padding: 15px 0 15px 60px;
+  width: 225px;
 }
 
 .task__item.completed label .description {
@@ -86,8 +85,8 @@
 
 .task__item .icon {
   position: absolute;
-  top: 0;
-  bottom: -3px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 30px;
   height: 40px;
   font-size: 34px;
@@ -103,7 +102,7 @@
 .edit {
   position: relative;
   margin: 0;
-  padding: 6px 16px 15px;
+  padding: 13px 16px 15px;
   width: 100%;
   height: 60px;
   font-size: 24px;

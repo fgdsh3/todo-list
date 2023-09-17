@@ -1,41 +1,77 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import './new-task-form.scss';
 
-class NewTaskForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: '',
-    };
+const NewTaskForm = (props) => {
+  const { onTaskAdded, placeholder } = props;
+
+  const [inputValue, setInputValue] = useState('')
+  const [minuts, setMinuts] = useState('')
+  const [seconds, setSeconds] = useState('')
+
+  const handleSetMinuts = (e) => {
+    const value = e.target.value
+    if (!isNaN(value)) {
+      setMinuts(() => {
+        if (value < 60) {
+          return value
+        }
+        else return '';
+      })
+    }
   }
 
-  updateValue(event) {
-    this.setState({ inputValue: event.target.value });
+  const handleSetSeconds = (e) => {
+    const value = e.target.value
+    if (!isNaN(value)) {
+      setSeconds(() => {
+        if (value < 60) {
+          return value
+        }
+        else return '';
+      })
+    }
   }
 
-  render() {
-    const { onTaskAdded } = this.props;
+  const handleSubmit = (e) => {
+    if (e.key === 'Enter' && inputValue.length > 0) {
+      if (minuts > 0 || seconds > 0) {
+        e.preventDefault()
+        onTaskAdded(inputValue, minuts, seconds);
+        setInputValue('')
+        setMinuts('')
+        setSeconds('')
+      }
+    }
+  }
 
-    return (
+  return (
+    <form className='new-task-formBox' onSubmit={handleSubmit}>
       <input
-        className="new-task-form"
-        type="text"
-        defaultValue=""
+        className='new-task-form'
+        type='text'
         autoFocus
-        placeholder={this.props.placeholder}
+        placeholder={placeholder}
+        value={inputValue}
         onChange={(e) => {
-          this.updateValue(e);
+          setInputValue(e.target.value);
         }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            onTaskAdded(this.state.inputValue);
-            e.target.value = '';
-            this.setState({ inputValue: '' })
-          }
-        }}
+        onKeyDown={handleSubmit}
       />
-    );
-  }
+      <input
+        className='new-task-form min'
+        placeholder='Min'
+        value={minuts}
+        onChange={handleSetMinuts}
+        onKeyDown={handleSubmit} ></input>
+      <input
+        className='new-task-form sec'
+        placeholder='Sec'
+        value={seconds}
+        onChange={handleSetSeconds}
+        onKeyDown={handleSubmit}
+      ></input>
+    </form >
+  );
 }
 
 export default NewTaskForm;

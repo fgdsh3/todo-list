@@ -1,14 +1,9 @@
-import React, { Component } from 'react';
 import './task-changer.scss';
 
-class TaskChanger extends Component {
-  state = {
-    inputValue: '',
-  };
+const TaskChanger = (props) => {
+  const { onChangeTask } = props
 
-  render() {
-    return <button className="icon icon-edit" type="button" onClick={this.props.onChangeTask} />;
-  }
+  return <button className="icon icon-edit" type="button" onClick={onChangeTask} />;
 }
 
 export default TaskChanger;

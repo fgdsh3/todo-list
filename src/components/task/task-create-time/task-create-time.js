@@ -1,32 +1,69 @@
-import React, { Component } from 'react';
+/* import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import './task-create-time.scss';
 
-class TaskCreateTime extends Component {
-  state = {
-    elapsedTime: 'now',
-  };
+const TaskCreateTime = (props) => {
+  const { modifiedTask, createTime } = props;
 
-  createDate = new Date();
+  const [elapsedTime, setElapsedTime] = useState('now');
+  const [intervalId, setIntervalId] = useState();
 
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState(() => ({
-        elapsedTime: formatDistanceToNow(this.createDate, {
+
+  useEffect(() => {
+    if (modifiedTask && elapsedTime === 'now') {
+      setElapsedTime('modified now')
+    }
+    clearInterval(intervalId);
+    const interval = setInterval(() => {
+      setElapsedTime(() => {
+        let DistancetoNow = formatDistanceToNow(createTime, {
           includeSeconds: true,
           addSuffix: true,
-        }),
-      }));
+        });
+        if (modifiedTask) {
+          DistancetoNow = 'modified ' + DistancetoNow
+        }
+        return DistancetoNow
+      });
     }, 5000);
-  }
+    setIntervalId(interval);
+  }, [elapsedTime]);
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+  return <span className="created">{elapsedTime}</span>;
+};
 
-  render() {
-    return <span className="created">{this.state.elapsedTime}</span>;
-  }
-}
+export default TaskCreateTime; */
+
+import { useEffect, useState, useRef } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import './task-create-time.scss';
+
+const TaskCreateTime = (props) => {
+  const { createTime } = props;
+
+  const [elapsedTime, setElapsedTime] = useState('now');
+  const [intervalId, setIntervalId] = useState();
+  const createTimeRef = useRef(createTime);
+
+  useEffect(() => {
+    const changeElapsedTime = () => {
+      setElapsedTime(() => {
+        let distanceToNow = formatDistanceToNow(createTimeRef.current, {
+          includeSeconds: true,
+          addSuffix: true,
+        });
+        return distanceToNow;
+      });
+    }
+    changeElapsedTime()
+    clearInterval(intervalId);
+    const interval = setInterval(() => {
+      changeElapsedTime()
+    }, 5000);
+    setIntervalId(interval);
+  }, [elapsedTime]);
+
+  return <span className="created">{elapsedTime}</span>;
+};
 
 export default TaskCreateTime;

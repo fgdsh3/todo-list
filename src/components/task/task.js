@@ -1,70 +1,74 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 
 import TaskCreateTime from './task-create-time';
 import ClearTask from './clear-task';
 import TaskChanger from './task-changer';
+import Timer from './timer';
 import './task.scss';
 
-class Task extends Component {
-  state = {
-    isChecked: this.props.isChecked,
-    editing: false,
-    label: this.props.label,
+const Task = (props) => {
+  const { taskId, onDeleted, onChangeCompleted, isChecked, label, time, stopTimer, startTimer, isRunning, createTime } = props;
+
+  const [isCompleted, setIsCompleted] = useState(isChecked)
+  const [isEditing, setIsEditing] = useState(false)
+  const [taskText, setTaskText] = useState(label)
+
+  const checkTask = () => {
+    setIsCompleted(() => !isCompleted);
   };
 
-  checkTask = () => {
-    this.setState(({ isChecked }) => ({ isChecked: !isChecked }));
+  const changeTask = () => {
+    setIsEditing(() => !isEditing);
   };
 
-  changeTask = () => {
-    this.setState(({ editing }) => ({ editing: !editing }));
-  };
+  const labelClass = isCompleted ? 'completed' : '';
 
-  render() {
-    const { id, onDeleted, onChangeCompleted, isChecked } = this.props;
-    const labelClass = this.state.isChecked ? 'completed' : '';
-
-    if (this.state.editing) {
-      return (
-        <form
-          className="task__item"
-          onSubmit={(e) => {
-            e.preventDefault();
-            this.changeTask();
-          }}
-        >
-          <input
-            className="edit"
-            type="text"
-            autoFocus
-            defaultValue={this.state.label}
-            onChange={(e) => this.setState({ label: e.target.value })}
-          />
-        </form>
-      );
-    }
-
+  if (isEditing) {
     return (
-      <li className="task__item">
+      <form
+        className="task__item"
+        onSubmit={(e) => {
+          e.preventDefault();
+          changeTask();
+        }}
+      >
         <input
-          className="task__item-input"
-          type="checkbox"
-          id={id}
-          checked={isChecked}
-          onChange={() => {
-            this.checkTask();
-            onChangeCompleted(id);
-          }}
+          className="edit"
+          type="text"
+          autoFocus
+          defaultValue={taskText}
+          onChange={(e) => setTaskText(e.target.value)}
         />
-        <label className={labelClass} htmlFor={id}>
-          <span className="description">{this.state.label}</span>
-          <TaskCreateTime />
-        </label>
-        <TaskChanger onChangeTask={this.changeTask} />
-        <ClearTask onDeleted={onDeleted} taskId={id} />
-      </li>
+      </form>
     );
   }
+
+  return (
+    <li className="task__item">
+      <input
+        className="task__item-input"
+        type="checkbox"
+        id={taskId}
+        checked={isChecked}
+        onChange={() => {
+          checkTask();
+          onChangeCompleted(taskId);
+        }}
+      />
+      <label className={labelClass} htmlFor={taskId}>
+        <span className="description">{taskText}</span>
+        <Timer
+          time={time}
+          startTimer={startTimer}
+          stopTimer={stopTimer}
+          taskId={taskId}
+          isRunning={isRunning}></Timer>
+        <TaskCreateTime createTime={createTime} />
+      </label>
+      <TaskChanger onChangeTask={changeTask} />
+      <ClearTask onDeleted={onDeleted} taskId={taskId} />
+    </li>
+  );
 }
 
 export default Task;

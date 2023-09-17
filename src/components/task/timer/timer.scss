@@ -1,0 +1,40 @@
+.timer-box {
+  width: 100px;
+}
+
+.play-btn,
+.stop-btn {
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+}
+
+.play-btn {
+  font-size: 15px;
+  color: #cc9a9a;
+  cursor: pointer;
+  margin: auto 0;
+  transition: color .2s ease-out;
+
+  &:hover {
+    color: #996262;
+  }
+
+  &::after {
+    content: "▶"
+  }
+}
+
+.stop-btn {
+  font-size: 18px;
+
+  &::after {
+    content: "⏸"
+  }
+}
+
+.timer {
+  color: gray;
+  font-size: 13px;
+  margin-left: 10px;
+}
