@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import './timer.scss'
+import { useEffect, useState } from 'react';
+import './timer.scss';
 
 const Timer = (props) => {
-  const { time, startTimer, stopTimer, taskId, isRunning } = props
+  const { time, startStopTimer, taskId, isRunning } = props;
   const [visibleTimeLeft, setVisibleTimeLeft] = useState('');
 
   useEffect(() => {
@@ -10,26 +10,32 @@ const Timer = (props) => {
     let seconds = time % 60;
 
     if (seconds < 10) {
-      seconds = '0' + seconds
+      seconds = '0' + seconds;
     }
     if (minutes < 10) {
-      minutes = '0' + minutes
+      minutes = '0' + minutes;
     }
 
     setVisibleTimeLeft(minutes + ':' + seconds);
 
     if (time === 0 && isRunning) {
-      stopTimer(taskId);
+      startStopTimer(taskId, 'stop');
     }
-  }, [time, taskId, stopTimer, isRunning]);
+  }, [time, taskId, startStopTimer, isRunning]);
 
   return (
     <div className="timer-box">
-      <button className="play-btn" onClick={() => startTimer(taskId)}></button>
-      <button className="stop-btn" onClick={() => stopTimer(taskId)}></button>
+      <button
+        className="play-btn"
+        onClick={() => startStopTimer(taskId, 'start')}
+      ></button>
+      <button
+        className="stop-btn"
+        onClick={() => startStopTimer(taskId, 'stop')}
+      ></button>
       <span className="timer">{visibleTimeLeft}</span>
     </div>
-  )
-}
+  );
+};
 
 export default Timer;

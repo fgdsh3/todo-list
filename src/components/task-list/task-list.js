@@ -5,44 +5,36 @@ import Task from '../task';
 import './task-list.scss';
 
 const TaskList = (props) => {
-  const { onDeleted, onChangeCompleted, filteredTasks, handleSetTaskList } = props
+  const { onDeleted, onChangeCompleted, filteredTasks, setTaskList } = props;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      handleSetTaskList((prevTasks) =>
+      setTaskList((prevTasks) =>
         prevTasks.map((task) => {
-          return task.isRunning ? { ...task, time: task.time - 1 } : task
-        })
+          return task.isRunning ? { ...task, time: task.time - 1 } : task;
+        }),
       );
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [setTaskList]);
 
-
-  const startTimer = (taskId) => {
-    handleSetTaskList((prevTasks) =>
+  const startStopTimer = (taskId, startStopString) => {
+    setTaskList((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === taskId ? { ...task, isRunning: true } : task
-      )
-    );
-  };
-
-  const stopTimer = (taskId) => {
-    handleSetTaskList((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId ? { ...task, isRunning: false } : task
-      )
+        task.id === taskId
+          ? { ...task, isRunning: startStopString === 'start' }
+          : task,
+      ),
     );
   };
 
   return (
-    <main className='main'>
-      <ul className="task-list">{
-        filteredTasks.map((task) => (
+    <main className="main">
+      <ul className="task-list">
+        {filteredTasks.map((task) => (
           <Task
-            startTimer={startTimer}
-            stopTimer={stopTimer}
+            startStopTimer={startStopTimer}
             key={task.id}
             label={task.label}
             taskId={task.id}
@@ -52,16 +44,17 @@ const TaskList = (props) => {
             time={task.time}
             isRunning={task.isRunning}
             createTime={task.createTime}
-          />))
-      }</ul>
+          />
+        ))}
+      </ul>
     </main>
-  )
-}
+  );
+};
 
 TaskList.defaultProps = {
   label: '',
-  onDeleted: () => { },
-  onChangeCompleted: () => { },
+  onDeleted: () => {},
+  onChangeCompleted: () => {},
   isChecked: false,
 };
 

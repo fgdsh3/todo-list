@@ -1,7 +1,8 @@
 import './tasks-filter.scss';
+import classNames from 'classnames';
 
 const TasksFilter = (props) => {
-  const { filter, onChangeFilter, onFilter } = props
+  const { filter, onChangeFilter, onFilter } = props;
 
   const buttons = [
     { name: 'all', label: 'All', isActive: true },
@@ -10,10 +11,10 @@ const TasksFilter = (props) => {
   ];
 
   const btns = buttons.map(({ name, label }) => {
-    let classBtn = 'task-filter-btn';
-    if (name === filter) {
-      classBtn += ' active';
-    } else classBtn = 'task-filter-btn';
+    const classBtn = classNames({
+      'task-filter-btn': true,
+      ' active': name === filter,
+    });
     return (
       <li key={name}>
         <button
@@ -31,6 +32,6 @@ const TasksFilter = (props) => {
   });
 
   return <ul className="task-filter">{btns}</ul>;
-}
+};
 
 export default TasksFilter;

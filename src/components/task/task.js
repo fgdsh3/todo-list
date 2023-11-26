@@ -7,11 +7,21 @@ import Timer from './timer';
 import './task.scss';
 
 const Task = (props) => {
-  const { taskId, onDeleted, onChangeCompleted, isChecked, label, time, stopTimer, startTimer, isRunning, createTime } = props;
+  const {
+    taskId,
+    onDeleted,
+    onChangeCompleted,
+    isChecked,
+    label,
+    time,
+    startStopTimer,
+    isRunning,
+    createTime,
+  } = props;
 
-  const [isCompleted, setIsCompleted] = useState(isChecked)
-  const [isEditing, setIsEditing] = useState(false)
-  const [taskText, setTaskText] = useState(label)
+  const [isCompleted, setIsCompleted] = useState(isChecked);
+  const [isEditing, setIsEditing] = useState(false);
+  const [taskText, setTaskText] = useState(label);
 
   const checkTask = () => {
     setIsCompleted(() => !isCompleted);
@@ -59,16 +69,16 @@ const Task = (props) => {
         <span className="description">{taskText}</span>
         <Timer
           time={time}
-          startTimer={startTimer}
-          stopTimer={stopTimer}
+          startTimer={startStopTimer}
           taskId={taskId}
-          isRunning={isRunning}></Timer>
+          isRunning={isRunning}
+        ></Timer>
         <TaskCreateTime createTime={createTime} />
       </label>
       <TaskChanger onChangeTask={changeTask} />
       <ClearTask onDeleted={onDeleted} taskId={taskId} />
     </li>
   );
-}
+};
 
 export default Task;
